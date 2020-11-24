@@ -28,7 +28,7 @@ function page(){
     const consumptionPerWeek = 1200;
     const weeksAmount = 8;
 
-    return 1200 / 500 * 8;
+    return Math.ceil(1200 / 500 * 8);
 }
 
 function searchFloorPorch(number){
