@@ -43,6 +43,37 @@ function searchFloorPorch(number){
     return [porch, floor];
 }
 
+function pyramid(num){
+
+    const mediaNumber = num;
+    let octothorpe = "#";
+    
+  
+
+    for(let i = 0; i < mediaNumber; i++){
+
+        const count = mediaNumber * 2 - 1 * octothorpe.length;
+        let triangle = ""
+        
+        for (let j = 1; j <= count; j++) {
+            
+            if(j === mediaNumber - i){
+                triangle += octothorpe;
+                octothorpe += "##"
+                continue;
+            }
+            
+            triangle += "-";
+        }
+        console.log(triangle);
+    }
+
+
+
+
+    
+}
+
 FizBuz(15); 
 /*---------------------------------------------------------*/ // task - 1
 
@@ -56,3 +87,6 @@ let result = searchFloorPorch(456);
 console.log(`porch: ${result[0]}, floor: ${result[1]}`); 
 /*---------------------------------------------------------*/ //task - 4
 
+pyramid(7);
+pyramid(16);
+/*---------------------------------------------------------*/ //task - 5
