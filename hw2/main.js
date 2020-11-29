@@ -58,3 +58,33 @@ getNameOfDay(lang, day){
 }
 
 namesOfDays.getNameOfDay('ru', 1); //task 3
+
+function sumLesstNumbers(countNum){
+
+    arrNumber = [];
+
+    for(let i = 0; i < countNum; i++){
+
+        arrNumber.push(Math.round(Math.random() * (1000 - 1)));
+    }
+
+    for (let index = 0; index < arrNumber.length; index++) {
+       
+        for (let i = 0; i < arrNumber.length - index -1; i++) {
+        
+            let tmp = arrNumber[i];
+
+            if(tmp>arrNumber[i+1]) {
+                arrNumber[i] = arrNumber[i+1];
+                arrNumber[i+1] = tmp;
+            }
+         
+        }
+
+    }
+    console.log(arrNumber);
+
+    return arrNumber[0] + arrNumber[1];
+}
+
+console.log(sumLesstNumbers(4)); // task 04
