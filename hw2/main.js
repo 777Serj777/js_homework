@@ -42,4 +42,19 @@ function getArray(){
 }
 
 
-getArray();
+getArray(); //task 2
+
+const namesOfDays = {
+    ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+    en: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+
+
+getNameOfDay(lang, day){
+   
+        if(lang === 'ru') console.log(this[lang][day-1]); 
+        if(lang === 'en') console.log(this[lang][day-1]); 
+     
+    }
+}
+
+namesOfDays.getNameOfDay('ru', 1); //task 3
