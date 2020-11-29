@@ -87,4 +87,23 @@ function sumLesstNumbers(countNum){
     return arrNumber[0] + arrNumber[1];
 }
 
-console.log(sumLesstNumbers(4)); // task 04
+console.log("сумма двух наименьших чисел: " + sumLesstNumbers(4)); // task 04
+
+function bineryDecimal(){
+
+    let bineryCode = [1,1,1,0,1,0,1];
+    let number = 0;
+
+    for (let index = 0; index < bineryCode.length; index++) {
+
+        if(bineryCode[bineryCode.length-1 - index] === 1){
+
+            number += Math.pow(2, index);
+        }
+        
+    }
+
+    return number;
+}
+
+console.log(bineryDecimal()); //task 05
