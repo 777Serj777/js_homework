@@ -4,6 +4,38 @@ const Employee =  function(employee){
         this[key] = employee[key];
     }
 
+    Object.defineProperty(this, 'fullInfo', {
+
+        get: function(){
+
+            let info = "";
+          
+            for (const key in this) {
+
+                if(typeof(this[key]) === 'function') {continue}
+
+                (info.length > 0) ? info += ", " + key + " - " + this[key] : info += "" + key + " - " + this[key] 
+           
+            } 
+
+            return info;
+        },
+
+        set: function(obj){
+
+            if(typeof(obj) != "object") return;
+
+            for (const key in obj) {
+
+              if(!this[key]) continue;
+
+                this[key] = obj[key];
+
+            }
+        }
+
+        
+    });
     // this.getFullName = function(){
     //     return this.name +' '+ this.surname;
     // }
@@ -16,9 +48,9 @@ Employee.prototype.getFullName = function(){
 let employeeObj = new Employee(emplyeeArr[0]);
 
 
-console.log(employeeObj); // task 01
+console.log(employeeObj); //result task 01
 
-console.log(employeeObj.getFullName()); // task 02
+console.log(employeeObj.getFullName()); //result task 02
 
 let createEmployesFromArr = (arr) => {
 
@@ -32,7 +64,7 @@ let createEmployesFromArr = (arr) => {
 };
 const emplyeeConstructArr = createEmployesFromArr(emplyeeArr);
 
-console.log(emplyeeConstructArr); //task 03
+console.log(emplyeeConstructArr); //result task 03
 
 const getFullNamesFromArr = (arr) => {
 
@@ -45,7 +77,7 @@ const getFullNamesFromArr = (arr) => {
    return fullNameArr;
 }
 
-console.log(getFullNamesFromArr(emplyeeConstructArr)); //task 04
+console.log(getFullNamesFromArr(emplyeeConstructArr)); //result task 04
 
 const getMiddleSalary = (arr) => {
     
@@ -58,13 +90,35 @@ const getMiddleSalary = (arr) => {
    return middleSalary / arr.length;
 }
 
-console.log(getMiddleSalary(emplyeeConstructArr)); //task 05
+console.log(getMiddleSalary(emplyeeConstructArr)); //result task 05
 
-const getRandomEmployee = (arr) => {
+const choseEployee = (arr) => {
 
-    let index = ~~(Math.random() * arr.length);
+    let winner;
     
-    return arr[index];
+    return function getEmployee() {
+        
+        let newIndex  = ~~(Math.random() * arr.length);
+     
+        if(!winner) return (winner = arr[newIndex]);
+     
+        if(winner != arr[newIndex]) return arr[newIndex];
+        
+        return getEmployee();
+    }
 }
-    
-console.log(getRandomEmployee(emplyeeConstructArr)); // task 06
+
+let getRandomEmployee = choseEployee(emplyeeArr);
+
+console.log(getRandomEmployee()); //result task 06
+
+console.log(employeeObj.fullInfo); //result task 07
+
+employeeObj.fullInfo =  {name: 'Вася', salary: 9000, email: 'ex@mail.ua'};
+
+console.log(employeeObj.fullInfo); //result task 07
+
+
+
+
+
