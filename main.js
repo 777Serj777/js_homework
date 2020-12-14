@@ -102,7 +102,7 @@ const choseEployee = (arr) => {
      
         if(!winner) return (winner = arr[newIndex]);
      
-        if(winner != arr[newIndex]) return arr[newIndex];
+        if(winner != arr[newIndex]) return (winner = arr[newIndex]);
         
         return getEmployee();
     }
