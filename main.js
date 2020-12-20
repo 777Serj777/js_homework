@@ -211,9 +211,9 @@ class Validator{
     }
     checkIsPhone(someString){
 
-        let regexp = /^\+380\d{9}$/;
+    
 
-       return regexp.test(someString);
+       return (/^\+380\d{9}$/).test(someString) || /^\+38[(]0\d{2}[)]\d{7}$/.test(someString) || /^\+38[(]0\d{2}[)]\d{3}-\d{2}-\d{2}$/.test(someString);
     }
 }
 
@@ -221,7 +221,7 @@ var validator = new Validator();
 
 console.log(validator.checkIsDate('01.11.2021'));
 console.log(validator.checkIsDomain('www.google.com'));
-console.log(validator.checkIsPhone('+380123456789'));
+console.log(validator.checkIsPhone('+38(012)345-67-89'));
 console.log(validator.checkIsEmail('example.ua@gmail.com')); //result task 03
 
 
