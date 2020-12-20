@@ -1,123 +1,228 @@
-const Employee =  function(employee){
+class Student {
     
-    for (const key in employee) {
-        this[key] = employee[key];
+    #id;
+
+    constructor(enrolle){
+
+        this.#id = this.getId();
+        this.name = enrolle.name;
+        this.surname = enrolle.surname;
+        this.ratingPoint = enrolle.ratingPoint;
+        this.schoolPoint = enrolle.schoolPoint; 
+        this.isSelfPayment = this.selfPay();
+
+        Object.defineProperty(this, 'id',{
+            get: function(){
+                return this.#id;
+            }
+        }) 
     }
 
-    Object.defineProperty(this, 'fullInfo', {
+    getId() {
+        return ~~(Math.random() * 10**8);
+    }
 
-        get: function(){
+    selfPay() {
 
-            let info = "";
+        let point = 800;
+        let  budgetPlacesFull = false;
+    
+        if(this.ratingPoint < point) return true;
           
-            for (const key in this) {
+        if(!budgetPlacesFull){
+    
+            for (let i = 0; i < Student.budgetPlaces.length; i++) {
+            
+                if(Student.budgetPlaces[i] === undefined){
+                    Student.budgetPlaces[i] = this;
+                    return false; 
+                }
+               
+            }
+    
+            budgetPlacesFull = true;
+        }
+       
+        return this.transferToBudget();
+    }
 
-                if(typeof(this[key]) === 'function') {continue}
+    transferToBudget() {
+    
+        let arrBudgetPlaces = Student.budgetPlaces;
+    
+        arrBudgetPlaces.sort((objFirst, objSecond) => {
+    
+            if(objFirst.ratingPoint < objSecond.ratingPoint ) return 1;
+    
+            if(objFirst.ratingPoint > objSecond.ratingPoint ) return -1;
+    
+            if(objFirst.schoolPoint < objSecond.schoolPoint) return 1;
+    
+            if(objFirst.schoolPoint > objSecond.schoolPoint) return -1;
+    
+            return 0;
+        })
+    
+    {
+        // for (let i = 0; i < arrBudgetPlaces.length; i++) {
+            
+        //     for (let j = 0; j < arrBudgetPlaces.length - i - 1; j++) {
+    
+        //         if(arrBudgetPlaces[j].ratingPoint < arrBudgetPlaces[j + 1].ratingPoint){
+    
+        //             let tmp = arrBudgetPlaces[j];
+        //             arrBudgetPlaces[j] = arrBudgetPlaces[j + 1];
+        //             arrBudgetPlaces[j + 1] = tmp;
+    
+        //         }
+    
+        //         if(arrBudgetPlaces[j].ratingPoint === arrBudgetPlaces[j + 1].ratingPoint){
+    
+        //             if(arrBudgetPlaces[j].schoolPoint < arrBudgetPlaces[j + 1].schoolPoint){
+    
+        //                 let tmp = arrBudgetPlaces[j];
+        //                 arrBudgetPlaces[j] = arrBudgetPlaces[j + 1];
+        //                 arrBudgetPlaces[j + 1] = tmp;
+        //             }
+        //         }
+        //     }    
+        // }
+    }
 
-                (info.length > 0) ? info += ", " + key + " - " + this[key] : info += "" + key + " - " + this[key] 
-           
-            } 
+        let equalityTest = arrBudgetPlaces[arrBudgetPlaces.length - 1].ratingPoint - this.ratingPoint;
 
-            return info;
-        },
-
-        set: function(obj){
-
-            if(typeof(obj) != "object") return;
-
-            for (const key in obj) {
-
-              if(!this[key]) continue;
-
-                this[key] = obj[key];
-
+        if(equalityTest > 0) return true;
+    
+        if(equalityTest === 0){
+            
+            equalityTest = arrBudgetPlaces[arrBudgetPlaces.length - 1].schoolPoint - this.schoolPoint;
+            
+            if(equalityTest > 0){
+                return true;
             }
         }
-
         
-    });
-    // this.getFullName = function(){
-    //     return this.name +' '+ this.surname;
-    // }
-
-}
-Employee.prototype.getFullName = function(){
-    return this.name +' '+ this.surname;
-}
-
-let employeeObj = new Employee(emplyeeArr[0]);
-
-
-console.log(employeeObj); //result task 01
-
-console.log(employeeObj.getFullName()); //result task 02
-
-let createEmployesFromArr = (arr) => {
-
-    let instanceArr = [];
-
-    for (const instance of arr) {
-        instanceArr.push(new Employee(instance));
-    }
-
-    return instanceArr;
-};
-const emplyeeConstructArr = createEmployesFromArr(emplyeeArr);
-
-console.log(emplyeeConstructArr); //result task 03
-
-const getFullNamesFromArr = (arr) => {
-
-   let fullNameArr = []; 
-
-   for (const instance of arr) {
-       fullNameArr[fullNameArr.length] = instance.getFullName();
-   }
-
-   return fullNameArr;
-}
-
-console.log(getFullNamesFromArr(emplyeeConstructArr)); //result task 04
-
-const getMiddleSalary = (arr) => {
-    
-   let middleSalary = 0; 
-
-   for (const instance of arr) {
-        middleSalary += instance.salary != undefined && instance.salary;
-   }
-
-   return middleSalary / arr.length;
-}
-
-console.log(getMiddleSalary(emplyeeConstructArr)); //result task 05
-
-const choseEployee = (arr) => {
-
-    let winner;
-    
-    return function getEmployee() {
-        
-        let newIndex  = ~~(Math.random() * arr.length);
+        arrBudgetPlaces[arrBudgetPlaces.length - 1].isSelfPayment = true;
+        arrBudgetPlaces[arrBudgetPlaces.length - 1] = this;
+        return false;
      
-        if(!winner) return (winner = arr[newIndex]);
-     
-        if(winner != arr[newIndex]) return arr[newIndex];
-        
-        return getEmployee();
     }
 }
 
-let getRandomEmployee = choseEployee(emplyeeArr);
+Student.budgetPlaces = new Array(5);  
+Student.listOfStudents = [];
 
-console.log(getRandomEmployee()); //result task 06
+Student.addStudent = function (enrolle)  {
 
-console.log(employeeObj.fullInfo); //result task 07
+ 
+    if(!(enrolle instanceof Array)){
+        this.listOfStudents.push(new Student(enrolle)); 
+        return;
+    }
 
-employeeObj.fullInfo =  {name: 'Вася', salary: 9000, email: 'ex@mail.ua'};
+    for (const instance of enrolle) {
+        this.listOfStudents.push(new Student(instance));  
+    }
+  
+}
 
-console.log(employeeObj.fullInfo); //result task 07
+Student.addStudent(enrolleArr);
 
+console.log(Student.budgetPlaces);
+console.log(Student.listOfStudents); //result task 01
+
+
+class CustomString{
+
+    reverse([...someString]){
+
+        let resultReverse = "";
+    
+        someString.forEach(element => {
+            resultReverse = element + resultReverse;
+        });
+
+        return resultReverse;
+    }
+    ucFirst([...someString]){
+
+        let result = "";
+    
+        if(someString[0].charCodeAt() >= 97 && someString[0].charCodeAt() <= 122){
+
+            someString.forEach(element => {
+               result += (result.length === 0)? String.fromCharCode(element.charCodeAt() - 32) : element;
+            });
+        }
+
+        else {
+            result = "range of characters a-z!"
+        }
+        
+        return result;
+    }
+    ucWords(someString){
+
+        let result = "";
+        let arrString = someString.split(' ');
+
+        arrString.forEach(element => {
+            result += (result.length === 0) ? new CustomString().ucFirst(element) : " " + new CustomString().ucFirst(element);    
+        });
+
+        return result;
+        
+    }
+}
+
+const myString = new CustomString();
+
+console.log(myString.reverse("qwerty"));
+console.log(myString.ucFirst('qwerty'));
+console.log(myString.ucWords('qwerty qwerty qwerty')); //result task 02
+
+
+class Validator{
+
+
+    checkIsEmail(someString){
+
+        let regexp = /^[\w.]*\@\b[a-z]{4,6}\b.\b[a-z]{2,3}\b/;
+
+        return regexp.test(someString);
+
+    }
+    checkIsDomain(someString){
+        let regexp = /^[a-zA-Z.]*.\b[a-z]{2,4}$/;
+
+        return regexp.test(someString);
+    }
+    checkIsDate(someString){
+
+        let reg = [/^\d\d\.[1-9][3-9]\.\d{4}$/, /^[3][2-9]\.[0-1]\d\.\d{4}$/, /^[0][0]\.[0-1]\d\.\d{4}$/, /^\d\d\.[0][0]\.\d{4}$/];
+
+        for (const element of reg) {
+            if(element.test(someString)) return false; 
+        }
+              
+        let regexp = /^[0-3]\d\.[0-1]\d\.\d{4}$/;
+
+        return regexp.test(someString);
+    }
+    checkIsPhone(someString){
+
+        let regexp = /^\+380\d{9}$/;
+
+       return regexp.test(someString);
+    }
+}
+
+var validator = new Validator();
+
+console.log(validator.checkIsDate('01.11.2021'));
+console.log(validator.checkIsDomain('www.google.com'));
+console.log(validator.checkIsPhone('+380123456789'));
+console.log(validator.checkIsEmail('example.ua@gmail.com')); //result task 03
 
 
 
