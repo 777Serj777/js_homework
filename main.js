@@ -131,7 +131,6 @@ Student.addStudent(enrolleArr);
 console.log(Student.budgetPlaces);
 console.log(Student.listOfStudents); //result task 01
 
-
 class CustomString{
 
     reverse([...someString]){
@@ -181,9 +180,7 @@ console.log(myString.reverse("qwerty"));
 console.log(myString.ucFirst('qwerty'));
 console.log(myString.ucWords('qwerty qwerty qwerty')); //result task 02
 
-
 class Validator{
-
 
     checkIsEmail(someString){
 
@@ -210,10 +207,7 @@ class Validator{
         return regexp.test(someString);
     }
     checkIsPhone(someString){
-
-    
-
-       return (/^\+380\d{9}$/).test(someString) || /^\+38[(]0\d{2}[)]\d{7}$/.test(someString) || /^\+38[(]0\d{2}[)]\d{3}-\d{2}-\d{2}$/.test(someString);
+       return /^\+380\d{9}$/.test(someString) || /^\+38[(]0\d{2}[)]\d{7}$/.test(someString) || /^\+38[(]0\d{2}[)]\d{3}-\d{2}-\d{2}$/.test(someString);
     }
 }
 
