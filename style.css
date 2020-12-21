@@ -1,26 +1,26 @@
-.timer{
- 
-    font-size: 4.5rem;
-    font-weight: 600;
+html{
+    font-size: 62.5%;
+}
+body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-   
 }
 .wrap{
     display: flex;
     flex-flow: column;
     align-items: center;
 }
-
+.timer{
+    font-size: 6.5rem;
+    font-weight: 600;  
+}
 .btn{
     background-color: rgba(235, 146, 114, 0.979);
-    font-size: 2.5rem;
-    font-weight: 600;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3.5rem;
+    font-weight: 600; 
     cursor: pointer;
     padding: 1rem 2rem;
-    border-radius: 3px; 
+    border-radius: .3rem; 
 }
-
 .btn:active{
     transform: scale(.9);
 }
