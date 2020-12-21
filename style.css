@@ -1,0 +1,27 @@
+.timer{
+ 
+    font-size: 4.5rem;
+    font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+   
+}
+.wrap{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.btn{
+    background-color: rgba(235, 146, 114, 0.979);
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border-radius: 3px; 
+}
+
+.btn:active{
+    transform: scale(.9);
+}
+
