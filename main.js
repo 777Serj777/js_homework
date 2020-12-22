@@ -9,7 +9,7 @@ class Student {
         this.surname = enrolle.surname;
         this.ratingPoint = enrolle.ratingPoint;
         this.schoolPoint = enrolle.schoolPoint; 
-        this.isSelfPayment = this.selfPay();
+        this.isSelfPayment;
 
         Object.defineProperty(this, 'id',{
             get: function(){
@@ -22,99 +22,43 @@ class Student {
         return ~~(Math.random() * 10**8);
     }
 
-    selfPay() {
+} 
+Student.listOfStudents = [];
 
-        let point = 800;
-        let  budgetPlacesFull = false;
+Student.sortArr = function(elementsArr, callback) {
     
-        if(this.ratingPoint < point) return true;
-          
-        if(!budgetPlacesFull){
-    
-            for (let i = 0; i < Student.budgetPlaces.length; i++) {
-            
-                if(Student.budgetPlaces[i] === undefined){
-                    Student.budgetPlaces[i] = this;
-                    return false; 
-                }
-               
-            }
-    
-            budgetPlacesFull = true;
-        }
-       
-        return this.transferToBudget();
-    }
+    let obj = elementsArr[elementsArr.length-1];
 
-    transferToBudget() {
-    
-        let arrBudgetPlaces = Student.budgetPlaces;
-    
-        arrBudgetPlaces.sort((objFirst, objSecond) => {
-    
-            if(objFirst.ratingPoint < objSecond.ratingPoint ) return 1;
-    
-            if(objFirst.ratingPoint > objSecond.ratingPoint ) return -1;
-    
-            if(objFirst.schoolPoint < objSecond.schoolPoint) return 1;
-    
-            if(objFirst.schoolPoint > objSecond.schoolPoint) return -1;
-    
-            return 0;
-        })
-    
-    {
-        // for (let i = 0; i < arrBudgetPlaces.length; i++) {
-            
-        //     for (let j = 0; j < arrBudgetPlaces.length - i - 1; j++) {
-    
-        //         if(arrBudgetPlaces[j].ratingPoint < arrBudgetPlaces[j + 1].ratingPoint){
-    
-        //             let tmp = arrBudgetPlaces[j];
-        //             arrBudgetPlaces[j] = arrBudgetPlaces[j + 1];
-        //             arrBudgetPlaces[j + 1] = tmp;
-    
-        //         }
-    
-        //         if(arrBudgetPlaces[j].ratingPoint === arrBudgetPlaces[j + 1].ratingPoint){
-    
-        //             if(arrBudgetPlaces[j].schoolPoint < arrBudgetPlaces[j + 1].schoolPoint){
-    
-        //                 let tmp = arrBudgetPlaces[j];
-        //                 arrBudgetPlaces[j] = arrBudgetPlaces[j + 1];
-        //                 arrBudgetPlaces[j + 1] = tmp;
-        //             }
-        //         }
-        //     }    
-        // }
-    }
 
-        let equalityTest = arrBudgetPlaces[arrBudgetPlaces.length - 1].ratingPoint - this.ratingPoint;
-
-        if(equalityTest > 0) return true;
-    
-        if(equalityTest === 0){
-            
-            equalityTest = arrBudgetPlaces[arrBudgetPlaces.length - 1].schoolPoint - this.schoolPoint;
-            
-            if(equalityTest > 0){
-                return true;
-            }
-        }
-        
-        arrBudgetPlaces[arrBudgetPlaces.length - 1].isSelfPayment = true;
-        arrBudgetPlaces[arrBudgetPlaces.length - 1] = this;
-        return false;
+    for (let j = elementsArr.length - 1; j > 0; j--) {
      
+        if(callback(elementsArr[j], elementsArr[j - 1]) < 0) continue;
+        let tmp = elementsArr[j];
+        elementsArr[j] = elementsArr[j - 1];
+        elementsArr[j - 1] = tmp;
+        elementsArr[j].isSelfPayment = (j >= 5);
     }
+    
+    obj.isSelfPayment = elementsArr.indexOf(obj) >= 5 || obj.ratingPoint < 800;
+    
 }
 
-Student.budgetPlaces = new Array(5);  
-Student.listOfStudents = [];
+Student.methodSort = (objFirst, objSecond) => {
+
+    if(objFirst.ratingPoint > objSecond.ratingPoint ) return 1;
+
+    if(objFirst.ratingPoint < objSecond.ratingPoint ) return -1;
+
+    if(objFirst.schoolPoint > objSecond.schoolPoint) return 1;
+
+    if(objFirst.schoolPoint < objSecond.schoolPoint) return -1;
+
+    return 0;
+
+}
 
 Student.addStudent = function (enrolle)  {
 
- 
     if(!(enrolle instanceof Array)){
         this.listOfStudents.push(new Student(enrolle)); 
         return;
@@ -122,13 +66,14 @@ Student.addStudent = function (enrolle)  {
 
     for (const instance of enrolle) {
         this.listOfStudents.push(new Student(instance));  
+        this.sortArr(this.listOfStudents, this.methodSort);
     }
   
 }
 
 Student.addStudent(enrolleArr);
 
-console.log(Student.budgetPlaces);
+
 console.log(Student.listOfStudents); //result task 01
 
 class CustomString{
