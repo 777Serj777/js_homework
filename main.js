@@ -34,7 +34,7 @@ window.onload = function(){
     let delay = 1000; 
 
     document.querySelector('.minute').innerHTML = (((time / 60 ) < 10)  ? '0'+ ~~(time / 60) : ~~(time / 60));
-    document.querySelector('.second').innerHTML = ( (time % 60 === 0) || (time % 60 < 10) ? '0' + time % 60 : time % 60 );
+    document.querySelector('.second').innerHTML = ((time % 60 < 10) ? '0' + time % 60 : time % 60 );
     
     const timer = time => {
 
@@ -50,7 +50,7 @@ window.onload = function(){
             }
         
             document.querySelector('.minute').innerHTML = (((time / 60 ) < 10)  ? '0'+ ~~(time / 60) : ~~(time / 60));
-            document.querySelector('.second').innerHTML = ( (time % 60 === 0) || (time % 60 < 10) ? '0' + time % 60 : time % 60 );
+            document.querySelector('.second').innerHTML = ((time % 60 < 10) ? '0' + time % 60 : time % 60 );
 
             time--;
     
