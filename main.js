@@ -28,11 +28,10 @@ setTimeout( () => {
     console.log(getTime());
 }, 2000);  //result task 03
 
-
-
 window.onload = function(){
 
-    const time = 120; 
+    const time = 120;
+    let delay = 1000; 
 
     document.querySelector('.minute').innerHTML = (((time / 60 ) < 10)  ? '0'+ ~~(time / 60) : ~~(time / 60));
     document.querySelector('.second').innerHTML = ( (time % 60 === 0) || (time % 60 < 10) ? '0' + time % 60 : time % 60 );
@@ -44,7 +43,7 @@ window.onload = function(){
         setTimeout(function run() {
     
             if(time < 0 || time === undefined) {
-         
+                
                 document.querySelector('#start').onclick = start;
                 console.log("Time End");
                 return;
@@ -55,8 +54,8 @@ window.onload = function(){
 
             time--;
     
-            setTimeout(run, 1000); 
-    
+            setTimeout(run, delay); 
+            
         });
           
     }
@@ -66,4 +65,3 @@ window.onload = function(){
     document.querySelector('#start').onclick =  start; //result task 04
     
 };
-  
