@@ -33,8 +33,8 @@ window.onload = function(){
     const time = 120;
     let delay = 1000; 
 
-    document.querySelector('.minute').innerHTML = (((time / 60 ) < 10)  ? '0'+ ~~(time / 60) : ~~(time / 60));
-    document.querySelector('.second').innerHTML = ((time % 60 < 10) ? '0' + time % 60 : time % 60 );
+    document.querySelector('.minute').innerHTML = time / 60  < 10  ? '0'+ ~~(time / 60) : ~~(time / 60);
+    document.querySelector('.second').innerHTML = time % 60 < 10 ? '0' + time % 60 : time % 60 ;
     
     const timer = time => {
 
@@ -49,8 +49,8 @@ window.onload = function(){
                 return;
             }
         
-            document.querySelector('.minute').innerHTML = (((time / 60 ) < 10)  ? '0'+ ~~(time / 60) : ~~(time / 60));
-            document.querySelector('.second').innerHTML = ((time % 60 < 10) ? '0' + time % 60 : time % 60 );
+            document.querySelector('.minute').innerHTML = time / 60  < 10  ? '0'+ ~~(time / 60) : ~~(time / 60);
+            document.querySelector('.second').innerHTML = time % 60 < 10 ? '0' + time % 60 : time % 60;
 
             time--;
     
